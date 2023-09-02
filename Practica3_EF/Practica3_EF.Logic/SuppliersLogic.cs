@@ -1,6 +1,8 @@
 ﻿using Practica3_EF.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,26 +16,90 @@ namespace Practica3_EF.Logic
         public void CreateOne(Suppliers newSupplier)
         {
             context.Suppliers.Add(newSupplier);
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                LogicExceptions.DbUpdateExceptionMessage(ex);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                LogicExceptions.DbEntityValidationExceptionMessage(ex);
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
         }
 
         public List<Suppliers> ReadAll()
         {
-            return context.Suppliers.ToList();
+            List<Suppliers> suppliersList = new List<Suppliers>();
+            try
+            {
+                suppliersList = context.Suppliers.ToList();
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
+            return suppliersList;
         }
         public Suppliers UpdateOne(Suppliers supplier)
         {
-            var supplierToUpdate = context.Suppliers.Find(supplier.SupplierID);
-            supplierToUpdate.CompanyName = supplier.CompanyName;
-            context.SaveChanges();
+            Suppliers supplierToUpdate = supplier;
+            try
+            {
+                supplierToUpdate = context.Suppliers.Single(p => p.SupplierID == supplier.SupplierID);
+                supplierToUpdate.CompanyName = supplier.CompanyName;
+                context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                LogicExceptions.DbUpdateExceptionMessage(ex);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                LogicExceptions.DbEntityValidationExceptionMessage(ex);
+            }
+            catch (NullReferenceException ex)
+            {
+                LogicExceptions.NullReferenceExceptionMessage(ex);
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
             return supplierToUpdate;
         }
 
         public Suppliers DeleteOne(Suppliers supplier)
         {
-            var supplierToDelete = context.Suppliers.Find(supplier.SupplierID);
-            context.Suppliers.Remove(supplierToDelete);
-            context.SaveChanges();
+            Suppliers supplierToDelete = supplier;
+            try
+            {
+                supplierToDelete = context.Suppliers.Single(p => p.SupplierID == supplier.SupplierID);
+                context.Suppliers.Remove(supplierToDelete);
+                context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                LogicExceptions.DbUpdateExceptionMessage(ex);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                LogicExceptions.DbEntityValidationExceptionMessage(ex);
+            }
+            catch (NullReferenceException ex)
+            {
+                LogicExceptions.NullReferenceExceptionMessage(ex);
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
             return supplierToDelete;
         }
     }

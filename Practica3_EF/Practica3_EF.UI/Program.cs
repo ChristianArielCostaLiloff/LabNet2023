@@ -22,7 +22,21 @@ namespace Practica3_EF.UI
                 Console.WriteLine("2 - Leer");
                 Console.WriteLine("3 - Modificar");
                 Console.WriteLine("4 - Eliminar");
-                int menuCrud = int.Parse(Console.ReadLine());
+                int menuCrud = 0, submenuCrud = 0;
+                try
+                {
+                    menuCrud = int.Parse(Console.ReadLine());
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    continue;
+                }
+                catch (Exception ex)
+                {
+                    LogicExceptions.ExceptionMessage(ex);
+                    continue;
+                }
 
                 switch (menuCrud)
                 {
@@ -37,8 +51,18 @@ namespace Practica3_EF.UI
                             Console.WriteLine("0 - Retroceder");
                             Console.WriteLine("1 - Crear cliente");
                             Console.WriteLine("2 - Crear proveedor");
-
-                            int submenuCrud = int.Parse(Console.ReadLine());
+                            try
+                            {
+                                submenuCrud = int.Parse(Console.ReadLine());
+                            }
+                            catch (FormatException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogicExceptions.ExceptionMessage(ex);
+                            }
 
                             switch (submenuCrud)
                             {
@@ -76,8 +100,19 @@ namespace Practica3_EF.UI
                             Console.WriteLine("0 - Retroceder");
                             Console.WriteLine("1 - Mostrar lista de clientes");
                             Console.WriteLine("2 - Mostrar lista de proveedores");
+                            try
+                            {
+                                submenuCrud = int.Parse(Console.ReadLine());
 
-                            int submenuCrud = int.Parse(Console.ReadLine());
+                            }
+                            catch (FormatException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogicExceptions.ExceptionMessage(ex);
+                            }
 
                             switch (submenuCrud)
                             {
@@ -115,9 +150,19 @@ namespace Practica3_EF.UI
                             Console.WriteLine("0 - Retroceder");
                             Console.WriteLine("1 - Modificar cliente");
                             Console.WriteLine("2 - Modificar proveedor");
+                            try
+                            {
+                                submenuCrud = int.Parse(Console.ReadLine());
 
-                            int submenuCrud = int.Parse(Console.ReadLine());
-
+                            }
+                            catch (FormatException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogicExceptions.ExceptionMessage(ex);
+                            }
                             switch (submenuCrud)
                             {
                                 case 0: continue;
@@ -132,7 +177,7 @@ namespace Practica3_EF.UI
                                         IABMLogic<Customers> customersLogic = new CustomersLogic();
                                         var customerUpdated = customersLogic.UpdateOne(new Customers { CustomerID = customerID, CompanyName = companyName });
 
-                                        Console.WriteLine("Cliente modificado:");
+                                        Console.WriteLine("Modificacion introducida:");
                                         Console.WriteLine($"{customerUpdated.CustomerID} -- {customerUpdated.CompanyName}");
                                         continue;
                                     }
@@ -162,8 +207,19 @@ namespace Practica3_EF.UI
                             Console.WriteLine("0 - Retroceder");
                             Console.WriteLine("1 - Eliminar un cliente");
                             Console.WriteLine("2 - Eliminar un proveedor");
+                            try
+                            {
+                                submenuCrud = int.Parse(Console.ReadLine());
 
-                            int submenuCrud = int.Parse(Console.ReadLine());
+                            }
+                            catch (FormatException ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogicExceptions.ExceptionMessage(ex);
+                            }
 
                             switch (submenuCrud)
                             {
@@ -199,7 +255,6 @@ namespace Practica3_EF.UI
                         Console.WriteLine("Seleccione una opcion válida.");
                         continue;
                 }
-
             } while (continueFlag);
         }
     }

@@ -2,6 +2,8 @@
 using Practica3_EF.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,27 +17,91 @@ namespace Practica3_EF.Logic
         public void CreateOne(Customers newCustomer)
         {
             context.Customers.Add(newCustomer);
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                LogicExceptions.DbUpdateExceptionMessage(ex);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                LogicExceptions.DbEntityValidationExceptionMessage(ex);
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
         }
 
         public List<Customers> ReadAll()
         {
-            return context.Customers.ToList();
+            List<Customers> customersList = new List<Customers>();
+            try
+            {
+                customersList = context.Customers.ToList();
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
+            return customersList;
         }
 
         public Customers UpdateOne(Customers customer)
         {
-            var customerToUpdate = context.Customers.Find(customer.CustomerID);
-            customerToUpdate.CompanyName = customer.CompanyName;
-            context.SaveChanges();
+            Customers customerToUpdate = customer;
+            try
+            {
+                customerToUpdate = context.Customers.Single(p => p.CustomerID == customer.CustomerID);
+                customerToUpdate.CompanyName = customer.CompanyName;
+                context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                LogicExceptions.DbUpdateExceptionMessage(ex);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                LogicExceptions.DbEntityValidationExceptionMessage(ex);
+            }
+            catch (NullReferenceException ex)
+            {
+                LogicExceptions.NullReferenceExceptionMessage(ex);
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
             return customerToUpdate;
         }
 
         public Customers DeleteOne(Customers customer)
         {
-            var customerToDelete = context.Customers.Find(customer.CustomerID);
-            context.Customers.Remove(customerToDelete);
-            context.SaveChanges();
+            Customers customerToDelete = customer;
+            try
+            {
+                customerToDelete = context.Customers.Single(p => p.CustomerID == customer.CustomerID);
+                context.Customers.Remove(customerToDelete);
+                context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                LogicExceptions.DbUpdateExceptionMessage(ex);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                LogicExceptions.DbEntityValidationExceptionMessage(ex);
+            }
+            catch (NullReferenceException ex)
+            {
+                LogicExceptions.NullReferenceExceptionMessage(ex);
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
             return customerToDelete;
         }
     }
