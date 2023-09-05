@@ -17,7 +17,9 @@ namespace Practica4.Logic
                          join category in context.Categories
                             on product.CategoryID equals category.CategoryID into joined
                          from j in joined
-                         select j).ToList().Distinct().ToList();
+                         select j)
+                         .Distinct()
+                         .ToList();
             return query;
         }
     }

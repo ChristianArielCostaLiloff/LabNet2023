@@ -44,7 +44,7 @@ namespace Practica4.Logic
         }
         public List<Products> ReadFirst()
         {
-            var query = context.Products.ToList().Take(1).ToList();
+            var query = context.Products.Take(1).ToList();
             return query;
         }
     }
