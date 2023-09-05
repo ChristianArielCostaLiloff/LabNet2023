@@ -20,7 +20,8 @@ namespace Practica4.Logic
         {
             var query = (from customer in context.Customers
                          where customer.Region == "WA"
-                         select customer).ToList();
+                         select customer)
+                         .ToList();
             return query;
         }
         public Customers ReadId789FirstOrNull()
@@ -33,5 +34,32 @@ namespace Practica4.Logic
             var query = context.Customers.ToList();
             return query;
         }
+        public List<Customers> ReadFirst3()
+        {
+            var query = (from customer in context.Customers
+                         where customer.Region == "WA"
+                         select customer)
+                         .Take(3)
+                         .ToList();
+            return query;
+        }
+        public List<Customers> ReadCostumersWithOrderCuantity()
+        {
+            //var query = (from customer in context.Customers
+            //             join order in context.Orders on customer.CustomerID equals order.CustomerID
+            //             into joined
+            //             from element in joined.DefaultIfEmpty()
+            //             orderby customer.CustomerID
+            //             select new
+            //             {
+            //                 customer.CustomerID,
+            //                 customer.CompanyName,
+            //                 customer.Country,
+            //                 OrderCuantity = customer.Orders.Count()
+            //             }).ToList();
+            var query = context.Customers.ToList();
+            return query;
+        }
+
     }
 }
