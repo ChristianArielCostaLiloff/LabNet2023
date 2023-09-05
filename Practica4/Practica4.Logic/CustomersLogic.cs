@@ -45,18 +45,6 @@ namespace Practica4.Logic
         }
         public List<Customers> ReadCostumersWithOrderCuantity()
         {
-            //var query = (from customer in context.Customers
-            //             join order in context.Orders on customer.CustomerID equals order.CustomerID
-            //             into joined
-            //             from element in joined.DefaultIfEmpty()
-            //             orderby customer.CustomerID
-            //             select new
-            //             {
-            //                 customer.CustomerID,
-            //                 customer.CompanyName,
-            //                 customer.Country,
-            //                 OrderCuantity = customer.Orders.Count()
-            //             }).ToList();
             var query = context.Customers.ToList();
             return query;
         }
