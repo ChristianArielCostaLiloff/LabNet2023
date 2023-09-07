@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <title>Practica 5</title>
+    <script defer src="./assets/js/index.js"></script>
+  </head>
+  <body class="body">
+    <header class="header">
+      <p class="header__text">Lab .Net & Angular</p>
+    </header>
+    <main class="main">
+      <div class="content">
+        <div class="description">
+          <p class="description__text">Practica 5</p>
+          <p class="description__text">HTML</p>
+          <p class="description__text">CSS</p>
+          <p class="description__text">JS</p>
+        </div>
+        <div class="game">
+          <p class="game__text">Adivina un número del 1 al 20</p>
+          <p class="game__text">Tienes 5 intentos</p>
+          <p class="game__text">Ingresa un número:</p>
+          <div class="game__message" id="message-hint"></div>
+          <div class="game-menu">
+            <input
+              class="game-menu__input"
+              type="number"
+              name=""
+              id="guess-number"
+              min="1"
+              max="20"
+            />
+            <button class="game-menu__button" type="button" id="button-send">Ingresar</button>
+            <button class="game-menu__button" type="button" id="button-reset">Reiniciar</button>
+          </div>
+          <div class="game__message" id="message-score"></div>
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      <p class="footer__text">Christian Costa</p>
+    </footer>
+  </body>
+</html>

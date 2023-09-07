@@ -1,0 +1,148 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.body {
+  background-image: url("../img/background.jpg");
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: fit-content;
+}
+
+.header {
+  min-height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header__text {
+  margin: 10px;
+  font-size: 18px;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.content {
+  height: 300px;
+  width: 800px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.description {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.description__text {
+  padding: 10px 10px 0px 20px;
+  color: #343a40;
+  font-size: 50px;
+  font-weight: 600;
+  border-left: solid 5px #343a40;
+}
+
+.game {
+  height: 250px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: solid 2px #343a40;
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #cccccc;
+  gap: 5px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.game__text {
+  color: #333;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.game__message {
+  margin: 5px;
+  height: 20px;
+}
+
+.game-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 50px;
+}
+
+.game-menu__input {
+  height: 40px;
+  width: 60px;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 6px;
+  border: solid 2px #6F6F6F;
+}
+
+.game-menu__button {
+  height: 40px;
+  width: 80px;
+  color: white;
+  border: solid 2px #6F6F6F;
+  border-radius: 15px;
+  background-color: #6F6F6F;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.game-menu__button--disabled {
+  display: none;
+}
+
+.game-menu__button:hover{
+    opacity: 0.7;
+    background-color: white;
+    color: #6F6F6F;
+    cursor: pointer;
+}
+
+.footer {
+  min-height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.footer__text {
+  margin: 10px;
+  font-size: 18px;
+}
