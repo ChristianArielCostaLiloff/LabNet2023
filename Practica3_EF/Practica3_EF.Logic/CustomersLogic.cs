@@ -82,7 +82,6 @@ namespace Practica3_EF.Logic
             Customers customerToUpdate;
             try
             {
-                //customerToUpdate = context.Customers.Single(p => p.CustomerID == customer.CustomerID);
                 customerToUpdate = (from cust in context.Customers
                                     where cust.CustomerID.TrimEnd() == customer.CustomerID.TrimEnd()
                                     select cust).FirstOrDefault();
