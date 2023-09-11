@@ -1,12 +1,9 @@
-﻿using Practica3_EF.Data;
-using Practica3_EF.Entities;
+﻿using Practica3_EF.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Practica3_EF.Logic
 {
@@ -85,8 +82,10 @@ namespace Practica3_EF.Logic
             Customers customerToUpdate;
             try
             {
-                customerToUpdate = context.Customers.Single(p => p.CustomerID == customer.CustomerID);
-                customerToUpdate.CustomerID = customer.CustomerID;
+                //customerToUpdate = context.Customers.Single(p => p.CustomerID == customer.CustomerID);
+                customerToUpdate = (from cust in context.Customers
+                                    where cust.CustomerID.TrimEnd() == customer.CustomerID.TrimEnd()
+                                    select cust).FirstOrDefault();
                 customerToUpdate.CompanyName = customer.CompanyName;
                 customerToUpdate.ContactName = customer.ConctactName;
                 customerToUpdate.City = customer.City;

@@ -4,8 +4,6 @@ using Practica6.MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Practica6.MVC.Controllers
@@ -33,8 +31,6 @@ namespace Practica6.MVC.Controllers
         [HttpPost]
         public ActionResult Create(CustomersView customersView)
         {
-            //if (customersView.Id.Length > 6)
-            //    ModelState.AddModelError("Id", "Id es requerido");
             try
             {
                 if (!customersLogic.RecordExists(customersView.Id))
@@ -81,7 +77,6 @@ namespace Practica6.MVC.Controllers
                 return RedirectToAction("Index");
             }
         }
-        //public ActionResult Update() { return View(); }
         public ActionResult Update(CustomersView customersView)
         {
             return View(customersView);
