@@ -5,7 +5,7 @@ namespace Practica6.MVC.Models
     public class CustomersView
     {
         [Required(ErrorMessage = "Id es requerido.")]
-        [StringLength(5, ErrorMessage = "Id tiene que tener 5 caracteres.")]
+        [StringLength(5, ErrorMessage = "Id tiene que tener 5 caracteres maximo.")]
         public string Id { get; set; }
 
         [Required(ErrorMessage = "Nombre de la compañia es requerido.")]
