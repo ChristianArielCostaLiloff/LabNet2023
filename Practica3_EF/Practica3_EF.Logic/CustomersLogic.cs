@@ -48,6 +48,10 @@ namespace Practica3_EF.Logic
             }
             return customersList;
         }
+        public bool RecordExists(string id)
+        {
+            return context.Customers.Any(customer => customer.CustomerID == id);
+        }
 
         public Customers UpdateOne(Customers customer)
         {
@@ -76,6 +80,36 @@ namespace Practica3_EF.Logic
             }
             return customerToUpdate;
         }
+        public void UpdateOne(DtoCustomer customer)
+        {
+            Customers customerToUpdate;
+            try
+            {
+                customerToUpdate = context.Customers.Single(p => p.CustomerID == customer.CustomerID);
+                customerToUpdate.CustomerID = customer.CustomerID;
+                customerToUpdate.CompanyName = customer.CompanyName;
+                customerToUpdate.ContactName = customer.ConctactName;
+                customerToUpdate.City = customer.City;
+                customerToUpdate.Phone = customer.Phone;
+                context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                LogicExceptions.DbUpdateExceptionMessage(ex);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                LogicExceptions.DbEntityValidationExceptionMessage(ex);
+            }
+            catch (NullReferenceException ex)
+            {
+                LogicExceptions.NullReferenceExceptionMessage(ex);
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
+        }
 
         public Customers DeleteOne(Customers customer)
         {
@@ -103,6 +137,31 @@ namespace Practica3_EF.Logic
                 LogicExceptions.ExceptionMessage(ex);
             }
             return customerToDelete;
+        }
+        public void DeleteOne(string id)
+        {
+            try
+            {
+                Customers customerToDelete = context.Customers.Find(id);
+                context.Customers.Remove(customerToDelete);
+                context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                LogicExceptions.DbUpdateExceptionMessage(ex);
+            }
+            catch (DbEntityValidationException ex)
+            {
+                LogicExceptions.DbEntityValidationExceptionMessage(ex);
+            }
+            catch (NullReferenceException ex)
+            {
+                LogicExceptions.NullReferenceExceptionMessage(ex);
+            }
+            catch (Exception ex)
+            {
+                LogicExceptions.ExceptionMessage(ex);
+            }
         }
     }
 }
