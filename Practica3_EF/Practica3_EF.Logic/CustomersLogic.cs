@@ -13,6 +13,14 @@ namespace Practica3_EF.Logic
 
         public void CreateOne(Customers newCustomer)
         {
+            if (RecordExists(newCustomer.CustomerID))
+            {
+                throw new Exception("Ya existe un cliente con el id introducido");
+            }
+            if (newCustomer.CustomerID == null || newCustomer.CompanyName == null)
+            {
+                throw new Exception("Los campos id y nombre de compañia son obligatorios");
+            }
             context.Customers.Add(newCustomer);
             try
             {
@@ -47,7 +55,10 @@ namespace Practica3_EF.Logic
         }
         public bool RecordExists(string id)
         {
-            return context.Customers.Any(customer => customer.CustomerID == id);
+            var record = (from cust in context.Customers
+                          where cust.CustomerID.TrimEnd() == id.TrimEnd()
+                          select cust).FirstOrDefault();
+            return record != null;
         }
 
         public Customers UpdateOne(Customers customer)
@@ -80,11 +91,21 @@ namespace Practica3_EF.Logic
         public void UpdateOne(DtoCustomer customer)
         {
             Customers customerToUpdate;
+            if (!RecordExists(customer.CustomerID))
+            {
+                throw new Exception("No existe cliente asociado al id introducido");
+            }
+            if (customer.CustomerID == null || customer.CompanyName == null)
+            {
+                throw new Exception("Los campos id y nombre de compañia son obligatorios");
+            }
             try
             {
-                customerToUpdate = (from cust in context.Customers
-                                    where cust.CustomerID.TrimEnd() == customer.CustomerID.TrimEnd()
-                                    select cust).FirstOrDefault();
+                customerToUpdate =
+                    (from cust in context.Customers
+                     where cust.CustomerID.TrimEnd() == customer.CustomerID.TrimEnd()
+                     select cust).FirstOrDefault();
+
                 customerToUpdate.CompanyName = customer.CompanyName;
                 customerToUpdate.ContactName = customer.ConctactName;
                 customerToUpdate.City = customer.City;
@@ -138,9 +159,16 @@ namespace Practica3_EF.Logic
         }
         public void DeleteOne(string id)
         {
+            if (!RecordExists(id))
+            {
+                throw new Exception("No existe cliente asociado al id introducido");
+            }
             try
             {
-                Customers customerToDelete = context.Customers.Find(id);
+                Customers customerToDelete =
+                    (from cust in context.Customers
+                     where cust.CustomerID.TrimEnd() == id.TrimEnd()
+                     select cust).FirstOrDefault();
                 context.Customers.Remove(customerToDelete);
                 context.SaveChanges();
             }

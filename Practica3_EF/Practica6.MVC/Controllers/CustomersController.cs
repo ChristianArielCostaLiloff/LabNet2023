@@ -60,7 +60,7 @@ namespace Practica6.MVC.Controllers
                     return View();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Index");
             }
@@ -72,7 +72,7 @@ namespace Practica6.MVC.Controllers
                 customersLogic.DeleteOne(id);
                 return RedirectToAction("Index", "Customers");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Index");
             }
