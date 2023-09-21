@@ -1,16 +1,17 @@
-<div mat-dialog-title>Formulario Cliente:</div>
+<div mat-dialog-title>{{ data ? "Modificar" : "Nuevo" }} Cliente:</div>
 <form [formGroup]="customerForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="form__content"></div>
   <div mat-dialog-content class="form__content">
     <div class="form__row">
       <mat-form-field appearance="outline">
         <mat-label>Id</mat-label>
-        <input
-          matInput
-          placeholder="Ej. 1234"
-          formControlName="Id"
-          [readonly]="control.isReadOnly"
-        />
-        <mat-hint>No modificable</mat-hint>
+        <input matInput placeholder="Ej. 1234" formControlName="Id" />
+        <mat-error *ngIf="formValidation('Id', 'required')">
+          Campo requerido
+        </mat-error>
+        <mat-error *ngIf="formValidation('Id', 'maxlength')">
+          5 caracteres maximo.
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Empresa</mat-label>
@@ -19,6 +20,12 @@
           placeholder="Ej. Nestle"
           formControlName="CompanyName"
         />
+        <mat-error *ngIf="formValidation('CompanyName', 'required')">
+          Campo requerido
+        </mat-error>
+        <mat-error *ngIf="formValidation('CompanyName', 'maxlength')">
+          40 caracteres maximo.
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -30,10 +37,16 @@
           placeholder="Ej. Juan Garcia"
           formControlName="ContactName"
         />
+        <mat-error *ngIf="formValidation('ContactName', 'maxlength')">
+          30 caracteres maximo.
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Ciudad</mat-label>
         <input matInput placeholder="Ej. Buenos Aires" formControlName="City" />
+        <mat-error *ngIf="formValidation('City', 'maxlength')">
+          15 caracteres maximo.
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -45,6 +58,9 @@
           placeholder="Ej. +54 9 111 222-3333"
           formControlName="Phone"
         />
+        <mat-error *ngIf="formValidation('Phone', 'maxlength')">
+          24 caracteres maximo.
+        </mat-error>
       </mat-form-field>
     </div>
   </div>
@@ -52,7 +68,12 @@
     <button mat-raised-button type="button" [mat-dialog-close]="false">
       Cancelar
     </button>
-    <button mat-raised-button color="primary" type="submit">
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="customerForm.invalid"
+    >
       {{ data ? "Guardar" : "Crear" }}
     </button>
   </div>

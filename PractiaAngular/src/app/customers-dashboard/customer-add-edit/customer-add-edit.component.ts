@@ -4,6 +4,7 @@ import { CustomersService } from '../services/customers.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Customers } from '../models/customers.interface';
 import { CoreService } from '../core/core.service';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-customer-add-edit',
@@ -11,11 +12,8 @@ import { CoreService } from '../core/core.service';
   styleUrls: ['./customer-add-edit.component.css'],
 })
 export class CustomerAddEditComponent {
-  customerForm: FormGroup;
-  control: any = {
-    isReadOnly: false,
-    style: 'background-color:red',
-  };
+  customerForm!: FormGroup;
+  isDisabled: boolean = false;
 
   constructor(
     private _fb: FormBuilder,
@@ -23,21 +21,21 @@ export class CustomerAddEditComponent {
     private _dialogRef: MatDialogRef<CustomerAddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Customers,
     private _coreService: CoreService
-  ) {
-    this.customerForm = this._fb.group({
-      Id: '',
-      CompanyName: '',
-      ContactName: '',
-      City: '',
-      Phone: '',
-    });
-  }
+  ) {}
 
   ngOnInit() {
+    this.isDisabled = this.data ? true : false;
+    this.customerForm = this._fb.group({
+      Id: [
+        { value: '', disabled: this.isDisabled },
+        [Validators.required, Validators.maxLength(5)],
+      ],
+      CompanyName: ['', [Validators.required, Validators.maxLength(40)]],
+      ContactName: ['', [Validators.maxLength(30)]],
+      City: ['', [Validators.maxLength(15)]],
+      Phone: ['', [Validators.maxLength(24)]],
+    });
     this.customerForm.patchValue(this.data);
-    this.data
-      ? (this.control.isReadOnly = true)
-      : (this.control.isReadOnly = false);
   }
 
   onFormSubmit() {
@@ -51,7 +49,7 @@ export class CustomerAddEditComponent {
               this._dialogRef.close(true);
             },
             error: (err: any) => {
-              console.error(err);
+              this._coreService.openSnackBar(err.error.Message);
             },
           });
       } else {
@@ -61,10 +59,19 @@ export class CustomerAddEditComponent {
             this._dialogRef.close(true);
           },
           error: (err: any) => {
-            console.error(err);
+            this._coreService.openSnackBar(err.error.Message);
           },
         });
       }
     }
   }
+
+  formValidation(key: string, errorType: string) {
+    return (
+      this.customerForm.controls[key].hasError(errorType) &&
+      (this.customerForm.controls[key].dirty ||
+        this.customerForm.controls[key].touched)
+    );
+  }
+
 }
